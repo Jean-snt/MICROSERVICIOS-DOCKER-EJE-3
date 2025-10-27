@@ -1,0 +1,44 @@
+# -------------------------
+# Archivos de Secretos y Entorno
+# ¡NUNCA SUBIR ESTOS ARCHIVOS! 🔒
+# -------------------------
+.env
+*.env
+.env.*
+
+# -------------------------
+# Dependencias y Entornos Virtuales de Python
+# -------------------------
+venv/
+*/venv/
+env/
+*/env/
+.venv/
+*/.venv/
+
+# -------------------------
+# Archivos de Base de Datos
+# -------------------------
+*.sqlite3
+db.sqlite3
+
+# -------------------------
+# Caché y archivos generados por Python ⚙️
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# -------------------------
+# Archivos de configuración de IDEs y editores
+# -------------------------
+.vscode/
+.idea/
+*.swp
+
+# -------------------------
+# Archivos generados por el Sistema Operativo
+# -------------------------
+.DS_Store
+Thumbs.db

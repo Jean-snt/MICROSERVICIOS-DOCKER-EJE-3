@@ -1,0 +1,24 @@
+services:
+  users:
+    build: ./microservicio_usuarios
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./microservicio_usuarios:/app
+    ports:
+      - "8000:8000"
+
+  books:
+    build: ./microservicio_libros
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - ./microservicio_libros:/app
+    ports:
+      - "8001:8001"
+
+  loans:
+    build: ./microservicio_prestamos
+    command: python manage.py runserver 0.0.0.0:8002
+    volumes:
+      - ./microservicio_prestamos:/app
+    ports:
+      - "8002:8002"
