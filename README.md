@@ -97,5 +97,3 @@ A continuación se detallan los endpoints disponibles para cada servicio.
 <img width="868" height="737" alt="Captura de pantalla 2025-10-27 134856" src="https://github.com/user-attachments/assets/b9d1104d-0cdc-4a12-8510-aaf32a1d1610" />
 
 Tras realizar 3 préstamos exitosos para el mismo usuario, se intenta realizar un cuarto. El sistema lo rechaza correctamente, devolviendo un error `400 Bad Request` y el mensaje correspondiente, validando la lógica de negocio implementada en el dominio.
-
-*(Pega aquí tu captura de pantalla de la respuesta `400 Bad Request` con el mensaje de error)*
