@@ -1,0 +1,39 @@
+# Archivo de ejemplo de variables de entorno
+# Copia este archivo a .env y ajusta los valores según sea necesario
+
+# User Service
+USER_DB_NAME=user_db
+USER_DB_USER=postgres
+USER_DB_PASSWORD=postgres
+USER_DB_HOST=user-db
+USER_DB_PORT=5432
+USER_SERVICE_PORT=8001
+
+# Book Service
+BOOK_DB_NAME=book_db
+BOOK_DB_USER=postgres
+BOOK_DB_PASSWORD=postgres
+BOOK_DB_HOST=book-db
+BOOK_DB_PORT=5432
+BOOK_SERVICE_PORT=8002
+
+# Loan Service
+LOAN_DB_NAME=loan_db
+LOAN_DB_USER=postgres
+LOAN_DB_PASSWORD=postgres
+LOAN_DB_HOST=loan-db
+LOAN_DB_PORT=5432
+LOAN_SERVICE_PORT=8003
+
+# URLs de servicios
+USER_SERVICE_URL=http://user-service:8000
+BOOK_SERVICE_URL=http://book-service:8000
+
+# General
+DEBUG=True
+SECRET_KEY=change-this-in-production
+
+
+
+
+
