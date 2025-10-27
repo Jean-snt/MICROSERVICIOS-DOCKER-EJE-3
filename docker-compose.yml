@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # Base de datos para el microservicio de usuarios
+  users-db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: users_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - users_db_data:/var/lib/postgresql/data
+
+  # Base de datos para el microservicio de libros
+  books-db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: books_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - books_db_data:/var/lib/postgresql/data
+
+  # Base de datos para el microservicio de préstamos
+  loans-db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: loans_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - loans_db_data:/var/lib/postgresql/data
+
+  # Microservicio de Usuarios
+  users-service:
+    build: ./users-service
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users_db
+    depends_on:
+      - users-db
+    volumes:
+      - ./users-service:/app
+
+  # Microservicio de Libros
+  books-service:
+    build: ./books-service
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@books-db:5432/books_db
+    depends_on:
+      - books-db
+    volumes:
+      - ./books-service:/app
+
+  # Microservicio de Préstamos (Arquitectura Hexagonal)
+  loans-service:
+    build: ./loans-service
+    ports:
+      - "8003:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@loans-db:5432/loans_db
+      - USERS_SERVICE_URL=http://users-service:8000
+      - BOOKS_SERVICE_URL=http://books-service:8000
+    depends_on:
+      - loans-db
+      - users-service
+      - books-service
+    volumes:
+      - ./loans-service:/app
+
+volumes:
+  users_db_data:
+  books_db_data:
+  loans_db_data:
