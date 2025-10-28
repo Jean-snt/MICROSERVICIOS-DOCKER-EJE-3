@@ -4,7 +4,7 @@
 ### Descripción del Proyecto
 
 Este proyecto implementa un sistema de gestión de préstamos de libros digitales utilizando **Arquitectura Hexagonal** (Ports and Adapters) en el microservicio principal de préstamos, junto con una arquitectura de **microservicios** distribuidos.
-
+.
 ### Arquitectura del Sistema
 
 El sistema está compuesto por **3 microservicios independientes**:
