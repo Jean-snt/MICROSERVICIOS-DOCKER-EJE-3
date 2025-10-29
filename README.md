@@ -176,6 +176,35 @@ curl -X POST http://localhost:8002/api/books/ \
 - **Libros**: http://localhost:8002/api/books/
 - **Préstamos**: http://localhost:8003/api/loans/
 
+### Endpoints de Salud (Health Check)
+
+Todos los microservicios incluyen un endpoint `/healthz` para verificar su estado de salud:
+
+- **Usuarios Health**: http://localhost:8001/healthz/
+- **Libros Health**: http://localhost:8002/healthz/
+- **Préstamos Health**: http://localhost:8003/healthz/
+
+**Respuesta del endpoint de salud:**
+```json
+{
+    "status": "healthy",
+    "service": "nombre-del-servicio",
+    "timestamp": "N/A"
+}
+```
+
+**Verificar estado de todos los servicios:**
+```bash
+# Verificar usuarios
+curl http://localhost:8001/healthz/
+
+# Verificar libros
+curl http://localhost:8002/healthz/
+
+# Verificar préstamos
+curl http://localhost:8003/healthz/
+```
+
 ### Endpoints Principales
 
 #### Microservicio de Usuarios (8001)
@@ -183,12 +212,14 @@ curl -X POST http://localhost:8002/api/books/ \
 - `POST /api/users/` - Crear usuario
 - `GET /api/users/{id}/` - Obtener usuario
 - `GET /api/users/{id}/check_status/` - Verificar estado
+- `GET /healthz/` - Health check del servicio
 
 #### Microservicio de Libros (8002)
 - `GET /api/books/` - Listar libros
 - `POST /api/books/` - Crear libro
 - `GET /api/books/{id}/` - Obtener libro
 - `GET /api/books/{id}/check_availability/` - Verificar disponibilidad
+- `GET /healthz/` - Health check del servicio
 
 #### Microservicio de Préstamos (8003) - Arquitectura Hexagonal
 - `GET /api/loans/` - Listar préstamos
@@ -199,32 +230,45 @@ curl -X POST http://localhost:8002/api/books/ \
 - `GET /api/loans/active_loans/` - Todos los préstamos activos
 - `GET /api/loans/check_user_can_borrow/?user_id={id}` - Verificar si puede pedir préstamo
 - `GET /api/loans/check_book_availability/?book_id={id}` - Verificar disponibilidad del libro
+- `GET /healthz/` - Health check del servicio
 
 ### Ejemplos de Uso
 
-#### 1. Crear un préstamo
+#### 1. Verificar estado de salud de los servicios
+```bash
+# Verificar usuarios
+curl http://localhost:8001/healthz/
+
+# Verificar libros
+curl http://localhost:8002/healthz/
+
+# Verificar préstamos
+curl http://localhost:8003/healthz/
+```
+
+#### 2. Crear un préstamo
 ```bash
 curl -X POST http://localhost:8003/api/loans/ \
   -H "Content-Type: application/json" \
   -d '{"user_id": 1, "book_id": 1}'
 ```
 
-#### 2. Verificar si un usuario puede pedir préstamo
+#### 3. Verificar si un usuario puede pedir préstamo
 ```bash
 curl http://localhost:8003/api/loans/check_user_can_borrow/?user_id=1
 ```
 
-#### 3. Verificar disponibilidad de un libro
+#### 4. Verificar disponibilidad de un libro
 ```bash
 curl http://localhost:8003/api/loans/check_book_availability/?book_id=1
 ```
 
-#### 4. Devolver un préstamo
+#### 5. Devolver un préstamo
 ```bash
 curl -X POST http://localhost:8003/api/loans/1/return_loan/
 ```
 
-#### 5. Ver préstamos activos de un usuario
+#### 6. Ver préstamos activos de un usuario
 ```bash
 curl http://localhost:8003/api/loans/user_active_loans/?user_id=1
 ```
