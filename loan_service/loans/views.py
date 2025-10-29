@@ -2,6 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .serializers import LoanSerializer, CreateLoanSerializer
 from .dependencies import get_loan_service
+from rest_framework.views import APIView
+
 
 class LoanViewSet(viewsets.ViewSet):
     
@@ -25,3 +27,8 @@ class LoanViewSet(viewsets.ViewSet):
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class HealthCheckView(APIView):
+    def get(self, request):
+        return Response({'status': 'ok'}, status=status.HTTP_200_OK)

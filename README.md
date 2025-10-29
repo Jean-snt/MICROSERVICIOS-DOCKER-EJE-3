@@ -1,54 +1,107 @@
-# Digital Library Management System
+# Sistema de Gestión de Biblioteca Digital
 
-This project is a distributed system for managing digital book loans, built with Django and Python, following a microservices architecture.
+Este proyecto es un sistema distribuido para gestionar préstamos de libros digitales, construido con Django y Python, siguiendo una arquitectura de microservicios.
 
-## System Description
+## Descripción del Sistema
 
-The system is composed of 3 independent microservices:
-*   **User Service**: Manages users.
-*   **Book Service**: Manages books.
-*   **Loan Service**: Manages loans, applying a hexagonal architecture.
+El sistema se compone de 3 microservicios independientes:
+*   **Servicio de Usuarios**: Gestiona los usuarios.
+*   **Servicio de Libros**: Gestiona los libros.
+*   **Servicio de Préstamos**: Gestiona los préstamos, aplicando una arquitectura hexagonal.
 
-## Installation
+## Instalación
 
-1.  Clone the repository.
-2.  Install the dependencies:
+1.  Clona el repositorio.
+2.  Instala las dependencias:
     ```bash
     pip install django djangorestframework requests
     ```
 
-## Usage
+## Uso
 
-1.  Run each microservice in a separate terminal:
+1.  Ejecuta cada microservicio en una terminal separada:
     ```bash
-    # Terminal 1: User Service
+    # Terminal 1: Servicio de Usuarios
     cd user_service
     python manage.py migrate
     python manage.py runserver 8001
 
-    # Terminal 2: Book Service
+    # Terminal 2: Servicio de Libros
     cd book_service
     python manage.py migrate
     python manage.py runserver 8002
 
-    # Terminal 3: Loan Service
+    # Terminal 3: Servicio de Préstamos
     cd loan_service
     python manage.py migrate
     python manage.py runserver 8000
     ```
 
-2.  Use a tool like `curl` or Postman to interact with the APIs:
+2.  Usa una herramienta como Postman para interactuar con las APIs.
 
-    *   **Create a user:**
-        ```bash
-        curl -X POST -H "Content-Type: application/json" -d '{"name": "John Doe"}' http://localhost:8001/api/users/
-        ```
+## Endpoints de la API
 
-    *   **Create a book:**
-        ```bash
-        curl -X POST -H "Content-Type: application/json" -d '{"title": "The Lord of the Rings", "author": "J.R.R. Tolkien"}' http://localhost:8002/api/books/
-        ```
+A continuación se muestra una lista detallada de todos los endpoints disponibles para cada servicio.
 
-    *   **Create a loan:**
-        ```bash
-        curl -X POST -H "Content-Type: application/json" -d '{"user_id": 1, "book_id": 1}' http://localhost:8000/api/loans/
+### Servicio de Usuarios (`http://localhost:8001`)
+
+*   **Health Check**
+    *   **GET** `/api/health/`
+        *   Descripción: Comprueba el estado del servicio.
+
+*   **Usuarios**
+    *   **GET** `/api/users/`
+        *   Descripción: Recupera una lista de todos los usuarios.
+    *   **GET** `/api/users/{id}/`
+        *   Descripción: Recupera un usuario específico por ID.
+    *   **POST** `/api/users/`
+        *   Descripción: Crea un nuevo usuario.
+        *   Body: `{"name": "John Doe", "email": "john.doe@example.com"}`
+    *   **PUT** `/api/users/{id}/`
+        *   Descripción: Actualiza un usuario existente.
+        *   Body: `{"name": "Johnathan Doe", "email": "john.doe@email.com"}`
+    *   **DELETE** `/api/users/{id}/`
+        *   Descripción: Elimina un usuario.
+
+### Servicio de Libros (`http://localhost:8002`)
+
+*   **Health Check**
+    *   **GET** `/api/health/`
+        *   Descripción: Comprueba el estado del servicio.
+
+*   **Libros**
+    *   **GET** `/api/books/`
+        *   Descripción: Recupera una lista de todos los libros.
+    *   **GET** `/api/books/{id}/`
+        *   Descripción: Recupera un libro específico por ID.
+    *   **POST** `/api/books/`
+        *   Descripción: Crea un nuevo libro.
+        *   Body: `{"title": "The Hobbit", "author": "J.R.R. Tolkien"}`
+    *   **PUT** `/api/books/{id}/`
+        *   Descripción: Actualiza un libro existente.
+        *   Body: `{"title": "The Hobbit", "author": "J.R.R. Tolkien"}`
+    *   **DELETE** `/api/books/{id}/`
+        *   Descripción: Elimina un libro.
+
+### Servicio de Préstamos (`http://localhost:8000`)
+
+*   **Health Check**
+    *   **GET** `/api/health/`
+        *   Descripción: Comprueba el estado del servicio.
+
+*   **Préstamos**
+    *   **GET** `/api/loans/`
+        *   Descripción: Recupera una lista de todos los préstamos.
+    *   **POST** `/api/loans/`
+        *   Descripción: Crea un nuevo préstamo.
+        *   Body: `{"user_id": 1, "book_id": 1}`
+
+## Uso con Postman
+
+Puedes usar Postman para interactuar con las APIs. A continuación, se explica cómo puedes configurar las solicitudes:
+
+*   Crea una nueva solicitud en Postman.
+*   Establece el método HTTP (por ejemplo, `GET`, `POST`, `PUT`, `DELETE`).
+*   Ingresa la URL de la solicitud (por ejemplo, `http://localhost:8001/api/users/`).
+*   Para las solicitudes `POST` y `PUT`, ve a la pestaña **Body**, selecciona **raw** y elige **JSON** en el menú desplegable. Luego, ingresa el payload JSON.
+*   Haz clic en **Send** para ejecutar la solicitud.
